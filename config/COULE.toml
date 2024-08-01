@@ -1,0 +1,19 @@
+# Config file for COULE experiments.
+m = 256
+n = 256
+
+# Noise informations
+noise_level = 0.01
+
+# Projector informations
+det_size = 512
+geometry = "fanflat"
+
+# Angular range informations
+start_angle = 0
+end_angle = 180
+n_angles = 60
+
+# DIG informations
+maxit = 200
+k = 10

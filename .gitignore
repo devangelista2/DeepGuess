@@ -1,0 +1,9 @@
+# Do not save the results
+results/*
+
+# And the model weights (too large)
+model_weights/*
+!.gitkeep
+
+# And the data
+data/
