@@ -1,27 +1,52 @@
 # DeepGuess
+This is the Official GitHub repository for the paper: *Deep Guess acceleration for explainable image reconstruction in sparse-view CT*, by E. Morotti, D. Evangelista, E. Loli Piccolomini, from University of Bologna. Please consider citing us by the `bib` at the bottom of the present `README.md` file.
 
 ## Installation
 To replicate the proposed experiments, just clone the Github repository by
 
 ```
-git clone https://github.com/devangelista2/TpV-squared.git
-cd TpV-squared
+git clone https://github.com/devangelista2/DeepGuess.git
+cd DeepGuess
 ```
 
 Please note that to run the experiments, the following packages are required:
 - `pytorch`
-- `astra-toolbox`
+- `tensorflow`
+- `keras`
 - `numpy`
+- `numba`
+- `astra-toolbox`
+- `scikit-image`
+- `PIL`
 - `matplotlib`
 
-Since our experiments make large use of `astra-toolbox`, it is also required to have access to a cuda-compatible graphics card. 
+All of the packages can be easily installed via `pip` or `conda`. Since our experiments make large use of `astra-toolbox`, it is also required to have access to a cuda-compatible graphics card. 
 
 ## Dataset
-Our experiments have been performed on the COULE dataset (available on Kaggle at https://www.kaggle.com/datasets/loiboresearchgroup/coule-dataset). The dataset consists of 430 grey-scale images of dimension $256 \times 256$ representing ellipses of different contrast levels and small, high-contrasted dots, that imitates the human body structure, divided in 400 training images and 30 test images. More informations about the structure of the dataset is available at the link above.
+Our experiments have been performed on two datasets:
+- The COULE dataset (available on Kaggle at https://www.kaggle.com/datasets/loiboresearchgroup/coule-dataset): consisting of 430 grey-scale images of dimension $256 \times 256$ representing ellipses of different contrast levels and small, high-contrasted dots, that imitates the human body structure, divided in 400 training images and 30 test images. More informations about the structure of the dataset is available at the link above.
+- A slightly modified version of the Mayo's Clinic Dataset (https://cdas.cancer.gov/datasets/mayo/): consisting of 3305 grey-scale images of dimension $512 \times 512$, representing real anonymized CT reconstructions of human lungs from 10 patients.
+
+It is thus required to download the two dataset to run the experiments. You can get COULE dataset from the link provided above, while the Mayo's Clinic Dataset is available at: https://drive.google.com/drive/folders/13BEiz6t57qSbwBpCtfqllmYTLmkhQeFE?usp=share_link.
 
 <p align="center">
-<img src="./data/COULE/test/gt/0.png">
+<figure>
+<img src="./imgs/true_COULE.png">
+<img src="./imgs/true_Mayo.png", width="256">
+<figcaption><i>Left:</i> A sample of COULE test data. <i>Right:</i> A sample of Mayo test data.</figcaption>
+</figure>
 </p>
+
+## Code structure
+The code is designed to be splitted into three main files, accessable from the root folder of the project:
+
+- `train.py`
+- `test.py`
+- `generate_convergence.py`
+
+The basic idea is the following (check the section below for the notation): the Deep Initial Guess (DIG) image is obtained by running a few iterations $k \in \mathbb{N}$ of an iterative algorithm (obtaining the $x_{pre}$ solution), and then applying a neural network trained on the convergence solutions of the same algorithm. The image obtained this way, known as $x_{DIG}$, is then used as an initial guess for an iterative algorithm solving the non-convex Total-$p$ Variation regularized problem. 
+
+All the files above 
 
 ## Methods
 We consider $x \in \mathbb{R}^n$ to be a grey-scale image representing the (unknown) interior scan we want to reconstruct. Also, given an angular range $\Gamma \subseteq [0, 2\pi]$ discretized into $N_\alpha$ uniformly distributed angles, we define the CT forward projector (with fan-beam geometry) $K \in \mathbb{R}^{m \times n}$ where $m = N_\alpha \cdot N_d$, $N_d$ being the number of pixel of the detector, which in the experiments is equal to $2\sqrt{n}$. The forward problem reads

@@ -3,7 +3,12 @@ results/*
 
 # And the model weights (too large)
 model_weights/*
-!.gitkeep
 
 # And the data
-data/
+data/*
+
+# Also, remove a file used just for visualization purpose
+create_plot_in-out_domain.py
+
+# Keep empty folders
+!.gitkeep
