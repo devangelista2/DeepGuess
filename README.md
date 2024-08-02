@@ -50,11 +50,11 @@ All the files listed above are self contained: it is sufficient to inspect them,
 This is done by considering the `generate_convergence.py` file and setting up the desired path.
 
 ## Pre-trained models
-The weights files containing the pre-trained models used in the paper can be downloaded by: ....
+The weights files containing the pre-trained models used in the paper can be downloaded from: https://drive.google.com/drive/folders/11WLiUMYaDmPCghikjjCWguFKOqmCm-F-?usp=sharing.
 By default, the file `test.py` expects the weights to be placed inside the `model_weights` folder. In particular, it is required copy inside the `model_weights` folder, the whole folder structure from Google Drive. For example, to save the weights for FBP-LPP method, applied on Mayo's Dataset, with Geometry $\mathcal{G}_{360, 360}$, the path is: `./model_weights/Mayo360_360/FBP_LPP/ResUNet.h5`.
 
 ## Methods
-We briefly outline the proposed framework, to define the notations of the code. For a full description, please refer to the paper. We consider $x \in \mathbb{R}^n$ to be a grey-scale image representing the (unknown) image we want to reconstruct. Also, given an angular range $[`start_angle`, `end_angle`]$, discretized into `n_angles` uniformly distributed angles, we define the CT forward projector (with fan-beam geometry) $K \in \mathbb{R}^{m \times n}$ where $m = `n_angles` \cdot n_d$, $n_d$ being the number of pixel of the detector, which in the experiments is equal to $2\sqrt{n}$. The forward problem reads
+We briefly outline the proposed framework, to define the notations of the code. For a full description, please refer to the paper. We consider $x \in \mathbb{R}^n$ to be a grey-scale image representing the (unknown) image we want to reconstruct. Also, given an angular range $[start_angle, end_angle]$, discretized into `n_angles` uniformly distributed angles, we define the CT forward projector (with fan-beam geometry) $K \in \mathbb{R}^{m \times n}$ where $m = n_angles \cdot n_d$, $n_d$ being the number of pixel of the detector, which in the experiments is equal to $2\sqrt{n}$. The forward problem reads
 
 ```math
 y^\delta = Kx + e.
@@ -74,7 +74,7 @@ where
 
 is the isotropic Total-$p$ Variation operator of order $p>0$.
 
-This problem can be solved by using the Chambolle-Pock (CP) algorithm with reweighting. But due to its non-convexity, it requires a good initial guess $x^{(0)}$. To do this, we provide a method (called Deep Guess), that considers a neural network trained as a post-processing operator, to compute an initial guess $x^{(0)}$ that is as close as possible to the convergence solution. We provide multiple choices for the algorithms to compute the Initial Guess. In particular, we always consider a pre-processing of the sinogram $x_{PRE} = \phi(y^\delta)$, which is then processed by a neural network to obtain $x_{DIG} = \Psi_\Theta(\x_{PRE})$. The Chambolle-Pock iterative algorithm is then used with $x^{(0)} := x_{DIG}$.  
+This problem can be solved by using the Chambolle-Pock (CP) algorithm with reweighting. But due to its non-convexity, it requires a good initial guess $x^{(0)}$. To do this, we provide a method (called Deep Guess), that considers a neural network trained as a post-processing operator, to compute an initial guess $x^{(0)}$ that is as close as possible to the convergence solution. We provide multiple choices for the algorithms to compute the Initial Guess. In particular, we always consider a pre-processing of the sinogram $x_{PRE} = \phi(y^\delta)$, which is then processed by a neural network to obtain $x_{DIG} = \Psi_\Theta(x_{PRE})$. The Chambolle-Pock iterative algorithm is then used with $x^{(0)} := x_{DIG}$.  
 
 ## Cite Us
 The paper associated with this repository has been submitted to a journal. The BibTex to cite the paper will be available as soon as the paper will be published. 
