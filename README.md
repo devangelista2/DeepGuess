@@ -54,7 +54,7 @@ The weights files containing the pre-trained models used in the paper can be dow
 By default, the file `test.py` expects the weights to be placed inside the `model_weights` folder. In particular, it is required copy inside the `model_weights` folder, the whole folder structure from Google Drive. For example, to save the weights for FBP-LPP method, applied on Mayo's Dataset, with Geometry $\mathcal{G}_{360, 360}$, the path is: `./model_weights/Mayo360_360/FBP_LPP/ResUNet.h5`.
 
 ## Methods
-We briefly outline the proposed framework, to define the notations of the code. For a full description, please refer to the paper. We consider $x \in \mathbb{R}^n$ to be a grey-scale image representing the (unknown) image we want to reconstruct. Also, given an angular range $[start_angle, end_angle]$, discretized into `n_angles` uniformly distributed angles, we define the CT forward projector (with fan-beam geometry) $K \in \mathbb{R}^{m \times n}$ where $m = n_angles \cdot n_d$, $n_d$ being the number of pixel of the detector, which in the experiments is equal to $2\sqrt{n}$. The forward problem reads
+We briefly outline the proposed framework, to define the notations of the code. For a full description, please refer to the paper. We consider $x \in \mathbb{R}^n$ to be a grey-scale image representing the (unknown) image we want to reconstruct. Also, given an angular range $[start\_angle, end\_angle]$, discretized into `n_angles` uniformly distributed angles, we define the CT forward projector (with fan-beam geometry) $K \in \mathbb{R}^{m \times n}$ where $m = n_{angles} \cdot n_d$, $n_d$ being the number of pixel of the detector, which in the experiments is equal to $2\sqrt{n}$. The forward problem reads
 
 ```math
 y^\delta = Kx + e.
